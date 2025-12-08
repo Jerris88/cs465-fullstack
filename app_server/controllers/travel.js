@@ -1,19 +1,37 @@
-// app_server/controllers/travel.js
+// Base URL and options for fetching trip data from our API
+const tripsEndpoint = 'http://localhost:3000/api/trips';
+const options = {
+  method: 'GET',
+  headers: {
+    Accept: 'application/json'
+  }
+};
 
-// Load the filesystem module to read JSON data
-var fs = require('fs');
+const travelList = async (req, res) => {
+  try {
+    const response = await fetch(tripsEndpoint, options);
+    const trips = await response.json();
 
-// Read the trips.json file and turn it into usable JavaScript data
-var trips = JSON.parse(fs.readFileSync('./data/trips.json', 'utf8'));
+    // Handle cases where no trips are returned
+    if (!Array.isArray(trips) || trips.length === 0) {
+      return res.render('travel', {
+        title: 'Travlr Getaways – Travel',
+        active_travel: true,
+        trips: [],
+        message: 'No trips found in the database.'
+      });
+    }
 
-const travelList = (req, res) => {
-
-  // Pass JSON trip data to the view so it can dynamically render the list
-  res.render('travel', {
-    title: 'Travlr Getaways – Travel',
-    active_travel: true,
-    trips: trips   
-  });
+    // Normal case – render trips from the API
+    return res.render('travel', {
+      title: 'Travlr Getaways – Travel',
+      active_travel: true,
+      trips: trips
+    });
+  } catch (err) {
+    console.error('Error fetching trips from API:', err);
+    return res.status(500).send('Error fetching trips from API');
+  }
 };
 
 module.exports = {

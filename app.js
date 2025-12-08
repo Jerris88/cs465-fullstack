@@ -4,10 +4,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-require('./app_server/models/db'); // connect to MongoDB and register models
+require('./app_api/models/db'); // connect to MongoDB and register models
 
 var indexRouter = require('./app_server/routes/index');
 // var usersRouter = require('./routes/users');
+
+var apiRouter = require('./app_api/routes/index'); // pulling in the API routes so the backend can serve JSON data
 
 var app = express();
 
@@ -27,6 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 // app.use('/users', usersRouter);
+
+app.use('/api', apiRouter); // send anything starting with /api over to the API router
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
