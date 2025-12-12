@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col-md-4 mb-4" *ngFor="let trip of trips">
+    <app-trip-card
+      [trip]="trip"
+      (deleted)="onTripDeleted($event)">
+    </app-trip-card>
+  </div>
+</div>

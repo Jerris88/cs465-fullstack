@@ -1,0 +1,93 @@
+<h2>Edit Trip</h2>
+
+<p>
+  <a routerLink="/trips">← Back to Trip List</a>
+</p>
+
+<form (ngSubmit)="onSubmit()" #tripForm="ngForm">
+
+  <div style="margin-bottom: 0.5rem;">
+    <label>Code*</label><br />
+    <input
+      type="text"
+      name="code"
+      [(ngModel)]="trip.code"
+      required
+    />
+  </div>
+
+  <div style="margin-bottom: 0.5rem;">
+    <label>Name*</label><br />
+    <input
+      type="text"
+      name="name"
+      [(ngModel)]="trip.name"
+      required
+    />
+  </div>
+
+  <div style="margin-bottom: 0.5rem;">
+    <label>Length* (e.g., "4 nights")</label><br />
+    <input
+      type="text"
+      name="length"
+      [(ngModel)]="trip.length"
+      required
+    />
+  </div>
+
+  <div style="margin-bottom: 0.5rem;">
+    <label>Start Date*</label><br />
+    <input
+      type="date"
+      name="start"
+      [(ngModel)]="trip.start"
+      required
+    />
+  </div>
+
+  <div style="margin-bottom: 0.5rem;">
+    <label>Resort*</label><br />
+    <input
+      type="text"
+      name="resort"
+      [(ngModel)]="trip.resort"
+      required
+    />
+  </div>
+
+  <div style="margin-bottom: 0.5rem;">
+    <label>Per Person* (e.g., "$1,450.00")</label><br />
+    <input
+      type="text"
+      name="perPerson"
+      [(ngModel)]="trip.perPerson"
+      required
+    />
+  </div>
+
+  <div style="margin-bottom: 0.5rem;">
+    <label>Image Path</label><br />
+    <input
+      type="text"
+      name="image"
+      [(ngModel)]="trip.image"
+    />
+  </div>
+
+  <div style="margin-bottom: 0.5rem;">
+    <label>Description</label><br />
+    <textarea
+      name="description"
+      rows="3"
+      [(ngModel)]="trip.description"
+    ></textarea>
+  </div>
+
+  <div *ngIf="formError" style="color: red; margin-bottom: 0.5rem;">
+    {{ formError }}
+  </div>
+
+  <button type="submit">Save Changes</button>
+  <a routerLink="/trips" style="margin-left: 0.5rem;">Cancel</a>
+</form>

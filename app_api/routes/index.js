@@ -1,13 +1,13 @@
-// app_api/routes/index.js
 const express = require('express');
 const router = express.Router();
 
 const tripsController = require('../controllers/trips');
 
-// Route to return all trips
+// Trips routes
 router.get('/trips', tripsController.tripsList);
-
-// Route to return a single trip by code
-router.get('/trips/:tripCode', tripsController.tripsFindByCode);
+router.get('/trips/:tripCode', tripsController.tripsFindOne);
+router.post('/trips', tripsController.tripsCreate);
+router.put('/trips/:tripCode', tripsController.tripsUpdateOne);
+router.delete('/trips/:tripCode', tripsController.tripsDeleteOne);
 
 module.exports = router;
