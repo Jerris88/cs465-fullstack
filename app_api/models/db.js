@@ -27,7 +27,7 @@ mongoose.connection.on('disconnected', () => {
   console.log('Mongoose disconnected');
 });
 
-// Graceful shutdown
+// Graceful shutdown helper
 const gracefulShutdown = (msg, callback) => {
   mongoose.connection.close(() => {
     console.log(`Mongoose disconnected through ${msg}`);
@@ -35,7 +35,7 @@ const gracefulShutdown = (msg, callback) => {
   });
 };
 
-// For nodemon restarts on Mac/Windows/Linux
+// Handle nodemon restarts across platforms
 if (process.platform === 'win32' || process.platform === 'darwin' || process.platform === 'linux') {
   const rl = readline.createInterface({
     input: process.stdin,
@@ -61,11 +61,12 @@ process.on('SIGTERM', () => {
   });
 });
 
-// Start connection
+// Start MongoDB connection
 connect();
 
 // Register models
-require('./travlr');
+require('./travlr'); // Trip data model
+require('./user');   // User authentication model
 
 // Export mongoose instance
 module.exports = mongoose;

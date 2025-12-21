@@ -1,0 +1,43 @@
+<!-- Admin login heading -->
+<h2>Admin Login</h2>
+
+<!-- Login form using Angular template-driven forms -->
+<form (ngSubmit)="onLogin()" #loginForm="ngForm">
+
+  <!-- Email input -->
+  <div>
+    <label for="email">Email</label><br />
+    <input
+      type="email"
+      id="email"
+      name="email"
+      [(ngModel)]="credentials.email"
+      required
+    />
+  </div>
+
+  <!-- Password input -->
+  <div style="margin-top: 10px;">
+    <label for="password">Password</label><br />
+    <input
+      type="password"
+      id="password"
+      name="password"
+      [(ngModel)]="credentials.password"
+      required
+    />
+  </div>
+
+  <!-- Submit button disabled when form is invalid -->
+  <div style="margin-top: 12px;">
+    <button type="submit" [disabled]="loginForm.invalid">
+      Log In
+    </button>
+  </div>
+
+  <!-- Error message shown on failed login -->
+  <p *ngIf="errorMessage" style="margin-top: 10px;">
+    {{ errorMessage }}
+  </p>
+
+</form>

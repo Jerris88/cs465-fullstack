@@ -43,7 +43,7 @@ export class AddTripComponent {
     this.tripDataService.addTrip(this.trip).subscribe({
       next: () => {
         // after successful save, go back to the list
-        this.router.navigate(['/']);
+        this.router.navigate(['/trips']);
       },
       error: (err) => {
         console.error('Error adding trip', err);

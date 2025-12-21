@@ -3,17 +3,22 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
 
-require('./app_api/models/db'); // connect to MongoDB and register models
+// Load database connection and register models
+require('./app_api/models/db');
+
+// Load Passport authentication strategy
+require('./app_api/config/passport');
 
 var indexRouter = require('./app_server/routes/index');
 // var usersRouter = require('./routes/users');
 
-var apiRouter = require('./app_api/routes/index'); // pulling in the API routes so the backend can serve JSON data
+var apiRouter = require('./app_api/routes/index'); // API routes for JSON endpoints
 
 var app = express();
 
-// view engine setup
+// View engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'hbs');
 
@@ -27,34 +32,31 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Enable CORS for Angular admin app
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  next();
-});
+// Enable CORS for Angular admin application
+app.use(cors({
+  origin: 'http://localhost:4200',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Handle preflight requests
+app.options('*', cors());
 
 app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 
-app.use('/api', apiRouter); // send anything starting with /api over to the API router
+app.use('/api', apiRouter); // Route API requests to backend controllers
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
+// Catch 404 and forward to error handler
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+// Error handler
+app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });

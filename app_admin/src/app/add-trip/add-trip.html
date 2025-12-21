@@ -1,11 +1,14 @@
 <h2>Add Trip</h2>
 
+<!-- Link to return to the trip listing page -->
 <p>
-  <a routerLink="/">← Back to Trip List</a>
+  <a routerLink="/trips">Back</a>
 </p>
 
+<!-- Form used to create a new trip -->
 <form (ngSubmit)="onSubmit()" #tripForm="ngForm">
 
+  <!-- Trip code input -->
   <div style="margin-bottom: 0.5rem;">
     <label>Code*</label><br>
     <input
@@ -16,6 +19,7 @@
     />
   </div>
 
+  <!-- Trip name input -->
   <div style="margin-bottom: 0.5rem;">
     <label>Name*</label><br>
     <input
@@ -26,6 +30,7 @@
     />
   </div>
 
+  <!-- Trip length input -->
   <div style="margin-bottom: 0.5rem;">
     <label>Length* (e.g., "4 nights")</label><br>
     <input
@@ -36,6 +41,7 @@
     />
   </div>
 
+  <!-- Trip start date input -->
   <div style="margin-bottom: 0.5rem;">
     <label>Start Date*</label><br>
     <input
@@ -46,6 +52,7 @@
     />
   </div>
 
+  <!-- Resort name input -->
   <div style="margin-bottom: 0.5rem;">
     <label>Resort*</label><br>
     <input
@@ -56,6 +63,7 @@
     />
   </div>
 
+  <!-- Price per person input -->
   <div style="margin-bottom: 0.5rem;">
     <label>Per Person* (e.g., "$1,450.00")</label><br>
     <input
@@ -66,6 +74,7 @@
     />
   </div>
 
+  <!-- Image path input -->
   <div style="margin-bottom: 0.5rem;">
     <label>Image Path (e.g., "images/reef4.jpg")</label><br>
     <input
@@ -75,6 +84,7 @@
     />
   </div>
 
+  <!-- Trip description input -->
   <div style="margin-bottom: 0.5rem;">
     <label>Description</label><br>
     <textarea
@@ -84,10 +94,14 @@
     ></textarea>
   </div>
 
+  <!-- Error message displayed when form validation fails -->
   <div *ngIf="formError" style="color: red; margin-bottom: 0.5rem;">
     {{ formError }}
   </div>
 
+  <!-- Submit button to save the trip -->
   <button type="submit">Save Trip</button>
-  <a routerLink="/" style="margin-left: 0.5rem;">Cancel</a>
+
+  <!-- Cancel link that returns to the trip listing -->
+  <a routerLink="/trips" style="margin-left: 0.5rem;">Cancel</a>
 </form>

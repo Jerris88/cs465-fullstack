@@ -1,11 +1,47 @@
 <div style="margin: 1rem;">
+
+  <!-- App title -->
   <h1>{{ title }}</h1>
 
-  <p style="margin-bottom: 1rem;">
-    <a routerLink="/trips" style="margin-right: 1rem;">Trip List</a>
-    |
-    <a routerLink="/add-trip" style="margin-left: 1rem;">Add Trip</a>
+  <!-- Navigation only shows after login -->
+  <p *ngIf="isLoggedIn()" style="margin-bottom: 1rem;">
+
+    <!-- Navigate to add trip page -->
+    <button
+      routerLink="/add-trip"
+      style="
+        margin-right: 0.5rem;
+        padding: 4px 10px;
+        border: 1px solid #000;
+        background: transparent;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        cursor: pointer;
+      "
+    >
+      Add Trip
+    </button>
+
+    <!-- Log out and return to login -->
+    <button
+      (click)="logout()"
+      style="
+        padding: 4px 10px;
+        border: 1px solid #000;
+        background: transparent;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        cursor: pointer;
+      "
+    >
+      Logout
+    </button>
+
   </p>
 
+  <!-- Route content renders here -->
   <router-outlet></router-outlet>
+
 </div>

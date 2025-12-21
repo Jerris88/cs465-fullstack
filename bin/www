@@ -1,22 +1,26 @@
 #!/usr/bin/env node
 
+// Load environment variables early so JWT_SECRET is available app-wide
+require('dotenv').config();
+
 /**
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('cs465-fullstack:server');
-var http = require('http');
+var app = require('../app'); // Main Express app
+var debug = require('debug')('cs465-fullstack:server'); // Debug logger
+var http = require('http'); // Node HTTP server
 
 /**
  * Get port from environment and store in Express.
+ * Defaults to 3000 if no PORT is set.
  */
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTP server using the Express app.
  */
 
 var server = http.createServer(app);
@@ -26,23 +30,24 @@ var server = http.createServer(app);
  */
 
 server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+server.on('error', onError);       // Handle startup/server errors
+server.on('listening', onListening); // Confirm server is running
 
 /**
  * Normalize a port into a number, string, or false.
+ * This allows flexibility for named pipes or numeric ports.
  */
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
-    // named pipe
+    // Named pipe
     return val;
   }
 
   if (port >= 0) {
-    // port number
+    // Valid port number
     return port;
   }
 
@@ -51,6 +56,7 @@ function normalizePort(val) {
 
 /**
  * Event listener for HTTP server "error" event.
+ * Handles common startup errors clearly.
  */
 
 function onError(error) {
@@ -62,16 +68,14 @@ function onError(error) {
     ? 'Pipe ' + port
     : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
+  // Handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges');
       process.exit(1);
-      break;
     case 'EADDRINUSE':
       console.error(bind + ' is already in use');
       process.exit(1);
-      break;
     default:
       throw error;
   }
@@ -79,6 +83,7 @@ function onError(error) {
 
 /**
  * Event listener for HTTP server "listening" event.
+ * Confirms which port or pipe the server is running on.
  */
 
 function onListening() {

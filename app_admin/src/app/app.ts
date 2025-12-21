@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common'; // Enables NgIf and common directives
 import { Router, RouterOutlet, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
+
+  // CommonModule is required for *ngIf in app.html
+  imports: [CommonModule, RouterOutlet, RouterLink],
+
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -14,9 +18,20 @@ export class App implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Force the initial view to /trips so the list shows without clicking
+    // Force the initial view to /login for secured admin access
     if (this.router.url === '/' || this.router.url === '') {
-      this.router.navigate(['/trips']);
+      this.router.navigate(['/login']);
     }
+  }
+
+  // True when a JWT token is stored (basic logged-in check)
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('travlr-token');
+  }
+
+  // Clears token and returns user to login screen
+  logout(): void {
+    localStorage.removeItem('travlr-token');
+    this.router.navigate(['/login']);
   }
 }
