@@ -16,6 +16,11 @@ export class TripCardComponent {
 
   constructor(private tripDataService: TripDataService) {}
 
+  // True when a JWT token is stored (controls admin-only actions)
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('travlr-token');
+  }
+
   deleteTrip(): void {
     if (!confirm('Are you sure you want to delete this trip?')) {
       return;

@@ -2,8 +2,8 @@ import { Routes } from '@angular/router';
 
 // Application routes for the admin SPA
 export const routes: Routes = [
-  // Default route sends users to the login page
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // Default route lands on the trip list (matches full stack guide flow)
+  { path: '', redirectTo: 'trips', pathMatch: 'full' },
 
   // Login route (standalone component file is login.ts)
   {
@@ -12,7 +12,7 @@ export const routes: Routes = [
       import('./login/login').then(m => m.LoginComponent)
   },
 
-  // Trip listing route (post-login destination)
+  // Trip listing route (public landing, admin actions show only after login)
   {
     path: 'trips',
     loadComponent: () =>
@@ -33,6 +33,6 @@ export const routes: Routes = [
       import('./edit-trip/edit-trip').then(m => m.EditTripComponent)
   },
 
-  // Catch-all route redirects back to login
-  { path: '**', redirectTo: 'login' }
+  // Catch-all route redirects back to trip list instead of forcing login
+  { path: '**', redirectTo: 'trips' }
 ];

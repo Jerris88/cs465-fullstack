@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+var session = require('express-session');
 
 // Load database connection and register models
 require('./app_api/models/db');
@@ -32,12 +33,30 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Enable sessions for customer login state
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'travlr-session-secret',
+    resave: false,
+    saveUninitialized: false
+  })
+);
+
+// Make login state available to all HBS views (for nav Login/Logout toggle)
+app.use((req, res, next) => {
+  res.locals.isLoggedIn = !!(req.session && req.session.user);
+  res.locals.userEmail = req.session?.user?.email;
+  next();
+});
+
 // Enable CORS for Angular admin application
-app.use(cors({
-  origin: 'http://localhost:4200',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(
+  cors({
+    origin: 'http://localhost:4200',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  })
+);
 
 // Handle preflight requests
 app.options('*', cors());

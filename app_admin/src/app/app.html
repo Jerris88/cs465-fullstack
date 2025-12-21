@@ -1,24 +1,41 @@
 <div style="margin: 1rem;">
 
-  <!-- App title -->
-  <h1>{{ title }}</h1>
+  <!-- App header with logo and title -->
+  <div style="display: flex; align-items: center; margin-bottom: 1rem;">
 
-  <!-- Navigation only shows after login -->
-  <p *ngIf="isLoggedIn()" style="margin-bottom: 1rem;">
+    <!-- Travlr Getaways logo pulled from public/images -->
+    <img
+      src="images/logo.png"
+      alt="Travlr Getaways Logo"
+      style="height: 48px; margin-right: 0.75rem;"
+    />
+
+    <!-- App title -->
+    <h1 style="margin: 0;">{{ title }}</h1>
+
+  </div>
+
+  <!-- Navigation shows login when logged out (hidden on the login page to avoid duplicates) -->
+  <p *ngIf="!isLoggedIn() && !isLoginRoute()" style="margin-bottom: 1.5rem;">
+
+    <!-- Navigate to login page -->
+    <button
+      routerLink="/login"
+      class="btn btn-outline-primary btn-sm"
+    >
+      Login
+    </button>
+
+  </p>
+
+  <!-- Navigation shows admin actions only after login -->
+  <p *ngIf="isLoggedIn()" style="margin-bottom: 1.5rem;">
 
     <!-- Navigate to add trip page -->
     <button
       routerLink="/add-trip"
-      style="
-        margin-right: 0.5rem;
-        padding: 4px 10px;
-        border: 1px solid #000;
-        background: transparent;
-        font-family: inherit;
-        font-size: inherit;
-        line-height: inherit;
-        cursor: pointer;
-      "
+      class="btn btn-primary btn-sm"
+      style="margin-right: 0.5rem;"
     >
       Add Trip
     </button>
@@ -26,15 +43,7 @@
     <!-- Log out and return to login -->
     <button
       (click)="logout()"
-      style="
-        padding: 4px 10px;
-        border: 1px solid #000;
-        background: transparent;
-        font-family: inherit;
-        font-size: inherit;
-        line-height: inherit;
-        cursor: pointer;
-      "
+      class="btn btn-outline-secondary btn-sm"
     >
       Logout
     </button>

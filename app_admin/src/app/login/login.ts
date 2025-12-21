@@ -32,6 +32,11 @@ export class LoginComponent {
     private router: Router
   ) {}
 
+  // Returns to the trip listing screen (no login required)
+  goToTrips(): void {
+    this.router.navigate(['/trips']);
+  }
+
   // Called when the login form is submitted
   onLogin(): void {
     // Clear any previous error message

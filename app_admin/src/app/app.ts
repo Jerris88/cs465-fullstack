@@ -18,15 +18,17 @@ export class App implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Force the initial view to /login for secured admin access
-    if (this.router.url === '/' || this.router.url === '') {
-      this.router.navigate(['/login']);
-    }
+    // Removed auto-redirect to /login so the default route can land on /trips
   }
 
   // True when a JWT token is stored (basic logged-in check)
   isLoggedIn(): boolean {
     return !!localStorage.getItem('travlr-token');
+  }
+
+  // True when the current route is the login page (prevents duplicate login UI)
+  isLoginRoute(): boolean {
+    return this.router.url.startsWith('/login');
   }
 
   // Clears token and returns user to login screen

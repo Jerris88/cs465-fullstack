@@ -1,43 +1,61 @@
-<!-- Admin login heading -->
-<h2>Admin Login</h2>
+<!-- Login stays left aligned with a normal page margin -->
+<div style="max-width: 520px;">
 
-<!-- Login form using Angular template-driven forms -->
-<form (ngSubmit)="onLogin()" #loginForm="ngForm">
+  <!-- Admin login heading -->
+  <h2 style="margin-bottom: 0.75rem;">Admin Login</h2>
 
-  <!-- Email input -->
-  <div>
-    <label for="email">Email</label><br />
-    <input
-      type="email"
-      id="email"
-      name="email"
-      [(ngModel)]="credentials.email"
-      required
-    />
-  </div>
+  <!-- Navigate back to trip listing -->
+  <button
+    type="button"
+    class="btn btn-outline-secondary btn-sm mb-3"
+    (click)="goToTrips()"
+  >
+    Back to Trips
+  </button>
 
-  <!-- Password input -->
-  <div style="margin-top: 10px;">
-    <label for="password">Password</label><br />
-    <input
-      type="password"
-      id="password"
-      name="password"
-      [(ngModel)]="credentials.password"
-      required
-    />
-  </div>
+  <!-- Login form using Angular template-driven forms -->
+  <form (ngSubmit)="onLogin()" #loginForm="ngForm">
 
-  <!-- Submit button disabled when form is invalid -->
-  <div style="margin-top: 12px;">
-    <button type="submit" [disabled]="loginForm.invalid">
+    <!-- Email input -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="form-control"
+        [(ngModel)]="credentials.email"
+        required
+      />
+    </div>
+
+    <!-- Password input -->
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        class="form-control"
+        [(ngModel)]="credentials.password"
+        required
+      />
+    </div>
+
+    <!-- Submit button disabled when form is invalid -->
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="loginForm.invalid"
+    >
       Log In
     </button>
-  </div>
 
-  <!-- Error message shown on failed login -->
-  <p *ngIf="errorMessage" style="margin-top: 10px;">
-    {{ errorMessage }}
-  </p>
+    <!-- Error message shown on failed login -->
+    <p *ngIf="errorMessage" class="text-danger mt-3">
+      {{ errorMessage }}
+    </p>
 
-</form>
+  </form>
+
+</div>

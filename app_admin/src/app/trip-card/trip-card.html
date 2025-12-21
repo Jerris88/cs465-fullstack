@@ -1,7 +1,9 @@
 <div class="card h-100">
   <img [src]="'http://localhost:3000/' + trip.image" class="card-img-top" alt="{{ trip.name }}">
+
   <div class="card-body">
     <h5 class="card-title">{{ trip.name }}</h5>
+
     <p class="card-text">
       <strong>Code:</strong> {{ trip.code }}<br>
       <strong>Length:</strong> {{ trip.length }}<br>
@@ -10,9 +12,15 @@
       <strong>Per Person:</strong> {{ trip.perPerson }}
     </p>
 
-    <p>
-      <a [routerLink]="['/edit-trip', trip.code]" style="margin-right: 0.75rem;">Edit</a>
-      <a href="#" (click)="deleteTrip(); $event.preventDefault();" style="color: red;">Delete</a>
+    <!-- Trip description (shown on cards like the guide) -->
+    <p *ngIf="trip.description" class="card-text">
+      {{ trip.description }}
     </p>
+
+    <!-- Admin actions only show after login -->
+    <div *ngIf="isLoggedIn()" class="d-flex gap-2">
+      <a class="btn btn-primary btn-sm" [routerLink]="['/edit-trip', trip.code]">Edit Trip</a>
+      <button class="btn btn-danger btn-sm" type="button" (click)="deleteTrip()">Delete</button>
+    </div>
   </div>
 </div>

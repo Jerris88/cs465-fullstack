@@ -16,13 +16,21 @@
         <a href="/reservations">Reservations</a>
       </li>
       <li>
-        <a href="/admin">Admin</a>
+        <a href="http://localhost:4200" target="_blank" rel="noopener noreferrer">Admin</a>
       </li>
       <li>
         <a href="/checkout">Checkout</a>
       </li>
       <li>
-        <a href="/login">Login</a>
+        {{#if isLoggedIn}}
+          <li>
+            <a href="/logout">Logout</a>
+          </li>
+        {{else}}
+          <li>
+            <a href="/login">Login</a>
+          </li>
+        {{/if}}
       </li>
     </ul>
 
